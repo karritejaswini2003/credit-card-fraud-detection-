@@ -6,4 +6,4 @@ scikit-learn==1.2.2
 joblib==1.3.2
 xgboost==1.7.6
 setuptools==68.2.2
-wheel
+wheel==0.41.2
