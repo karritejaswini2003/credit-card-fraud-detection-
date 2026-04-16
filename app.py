@@ -4,19 +4,25 @@ import joblib
 
 app = Flask(__name__)
 
-# Load Model
 model = joblib.load("model.pkl")
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    features = [float(x) for x in request.form.values()]
-    final_features = [np.array(features)]
-    prediction = model.predict(final_features)
+    input_features = [float(x) for x in request.form.values()]
+    features = np.array([input_features])
+    
+    prediction = model.predict(features)
+    
+    if prediction[0] == 1:
+        result = "Fraud Transaction"
+    else:
+        result = "Normal Transaction"
+        
+    return render_template('index.html', prediction_text=result)
 
-    output = "Fraud Transaction" if prediction
-    if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == "__main__":
+    app.run(debug=True)
