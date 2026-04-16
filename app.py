@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
 import numpy as np
 import joblib
+import os
 
 app = Flask(__name__)
 
-model = joblib.load("model.pkl")
+# Load model properly
+model_path = os.path.join(os.path.dirname(__file__), "model.pkl")
+model = joblib.load(model_path)
 
 @app.route('/')
 def home():
